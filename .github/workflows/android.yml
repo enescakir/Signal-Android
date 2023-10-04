@@ -4,18 +4,18 @@ on:
   pull_request:
   push:
     branches:
-    - 'main'
-    - '4.**'
-    - '5.**'
+    - 'build-test'
 
 permissions:
   contents: read # to fetch code (actions/checkout)
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest-8-cores
-
+    strategy:
+      matrix:
+        runs-on: [ubuntu-22.04, ubicloud-standard-2, ubicloud-standard-4, ubicloud-standard-8, ubicloud-standard-16]
+    name: Android ${{matrix.runs-on}}
+    runs-on: ${{matrix.runs-on}}
     steps:
     - uses: actions/checkout@v3
       with:
